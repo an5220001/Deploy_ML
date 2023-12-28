@@ -25,10 +25,10 @@ train_mode = dict(X_train.mode().iloc[0]) # mode() để lấy giá trị xuất
 X_train = X_train.fillna(train_mode) # fill giá trị NaN, Na, Null, ... bằng giá trị mới tìm được (mode)
 
 features_categorical = ['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex','native-country']
-encoder = {}
+encoders = {}
 for col in features_categorical:
     X_train[col] = LabelEncoder().fit_transform(X_train[col])
-    encoder[col] = LabelEncoder()
+    encoders[col] = LabelEncoder()
 # print(X_train.head())
 
 for col in features[:-1]:
@@ -41,7 +41,7 @@ rf = rf.fit(X_train, y_train)
 et = ExtraTreesClassifier(n_estimators=100)
 et = et.fit(X_train, y_train)
 
-joblib.dump(train_mode, "train_mode.joblib", compress=True)
-joblib.dump(encoder, "encoder.joblib", compress=True)
-joblib.dump(rf, "rf.joblib", compress=True)
-joblib.dump(et, "et.joblib", compress=True)
+joblib.dump(train_mode, "./train_mode.joblib", compress=True)
+joblib.dump(encoders, "./encoders.joblib", compress=True)
+joblib.dump(rf, "./random_forest.joblib", compress=True)
+joblib.dump(et, "./extra_trees.joblib", compress=True)
